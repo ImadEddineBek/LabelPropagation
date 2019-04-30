@@ -23,7 +23,7 @@ object Main {
     val g = Pregel(
       graph = gr.mapVertices { case (vid, _) => vid.toLong },
       initialMsg = init_message,
-      maxIterations = 2
+      maxIterations = 100
       ,
     )(
       vprog = (id: Long, vd: Long, a: Map[Long, Long]) => {
