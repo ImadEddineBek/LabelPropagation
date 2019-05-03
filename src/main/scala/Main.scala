@@ -23,7 +23,7 @@ object Main {
     val g = Pregel(
       graph = gr.mapVertices { case (vid, _) => vid.toLong },
       initialMsg = init_message,
-      maxIterations = 100
+      maxIterations = 3
       ,
     )(
       vprog = (id: Long, vd: Long, a: Map[Long, Long]) => {
@@ -43,32 +43,34 @@ object Main {
       }
     )
 
-    var writer = new PrintWriter(new File("clustering.txt"))
-    g.vertices.collect().foreach(x => {
-      writer.write(x._1 + " " + x._2 + "\n")
-    })
-    writer.close()
 
-    val stats = analyze(g)
-    val max = stats._4
-    val min = stats._3
-    val mean = stats._1
-    val variance = stats._2
-    val values = arg_max_min(g, max, min)
-    val minimum = values._2
-    val maximum = values._1
-    print(max, min, mean, variance)
-    writer = new PrintWriter(new File("max.txt"))
-    g.vertices.filter(x => x._2 == maximum).collect().foreach(x => {
-      writer.write(x._1 + " " + x._2 + "\n")
-    })
-    writer.close()
-
-    writer = new PrintWriter(new File("min.txt"))
-    g.vertices.filter(x => x._2 == minimum).collect().foreach(x => {
-      writer.write(x._1 + " " + x._2 + "\n")
-    })
-    writer.close()
+    g.vertices.collect().foreach(println)
+//    var writer = new PrintWriter(new File("clustering.txt"))
+//    g.vertices.collect().foreach(x => {
+//      writer.write(x._1 + " " + x._2 + "\n")
+//    })
+//    writer.close()
+//
+//    val stats = analyze(g)
+//    val max = stats._4
+//    val min = stats._3
+//    val mean = stats._1
+//    val variance = stats._2
+//    val values = arg_max_min(g, max, min)
+//    val minimum = values._2
+//    val maximum = values._1
+//    print(max, min, mean, variance)
+//    writer = new PrintWriter(new File("max.txt"))
+//    g.vertices.filter(x => x._2 == maximum).collect().foreach(x => {
+//      writer.write(x._1 + " " + x._2 + "\n")
+//    })
+//    writer.close()
+//
+//    writer = new PrintWriter(new File("min.txt"))
+//    g.vertices.filter(x => x._2 == minimum).collect().foreach(x => {
+//      writer.write(x._1 + " " + x._2 + "\n")
+//    })
+//    writer.close()
 
 
   }
