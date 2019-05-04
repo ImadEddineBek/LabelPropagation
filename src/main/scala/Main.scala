@@ -10,12 +10,13 @@ import scala.io.Source
 object Main {
   def main(args: Array[String]): Unit = {
     Logger.getLogger("org.apache.spark").setLevel(Level.ERROR)
-    val data_path = args(0)
+    val data_path = args(1)
     val spark = SparkSession
       .builder()
       .appName("Label Propagation")
       .config("spark.master", "local[2]")
       .getOrCreate()
+    println("I am here"+data_path)
     var gr = GraphLoader.edgeListFile(spark.sparkContext, data_path)
     val init_message = Map[Long, Long]()
 
@@ -44,7 +45,7 @@ object Main {
     )
 
 
-    g.vertices.collect().foreach(println)
+    g.vertices.foreach(println)
 //    var writer = new PrintWriter(new File("clustering.txt"))
 //    g.vertices.collect().foreach(x => {
 //      writer.write(x._1 + " " + x._2 + "\n")
